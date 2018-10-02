@@ -1,5 +1,7 @@
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Square {
     private double height;
@@ -111,9 +113,9 @@ public class Square {
                 //return Color.WHITE;
                 return Col.addFunkyShCol(Color.WHITE, getHeight(), getMoist());
             case SITY:
-
+                return Color.decode("#7b9095");
             default:
-                return Color.getHSBColor((float) height, .7f, .535f);
+                return Color.BLACK;
         }
     }
 
@@ -138,6 +140,11 @@ public class Square {
                 bio[i*len+j] = s[i][j].getBio();
             }
         }
+        return Biome.maxBiome(bio);
+    }
+
+    static Biome averangeBiome(List<Square> s){
+        List<Biome> bio = s.stream().map(Square::getBio).collect(Collectors.toList());
         return Biome.maxBiome(bio);
     }
 

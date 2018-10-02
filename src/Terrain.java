@@ -1,5 +1,6 @@
 import java.awt.*;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
 
 
@@ -17,28 +18,26 @@ public class Terrain extends JPanel {
         this.width = rows;
         this.height = cols;
         squares = new Square[rows][cols];
-        seed = new Random().nextInt();
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                squares[i][j] = new Square(i,j,seed);
-            }
-        }
-    }
-
-    private void addRivers(int count){
+        reroll();
 
     }
 
-    public int mode = 3;
+    public int mode = 4;
+    public int nMode = 4;
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(mode%3 == 2)
+        //debug
+        if(mode % nMode == 1)
             showHei(g);
-        else if(mode%3 == 1)
+        else if(mode % nMode == 2)
             showMoi(g);
-        else
+        else if(mode % nMode == 3)
+            showBiome(g, Biome.RIVER);
+        else {
             draw(g);
+        }
+
     }
 
     public void draw(Graphics g){
@@ -48,6 +47,8 @@ public class Terrain extends JPanel {
                     g.setColor(Color.black);
                 else if (getTSS(i) == hX && getTSS(j) == hY && hightlight == true)
                     g.setColor(squares[i][j].getColor().brighter());
+                else if (getTSS(i) == pX && getTSS(j) == pY)
+                    g.setColor(squares[i][j].getColor().darker());
                 else
                     g.setColor(squares[i][j].getColor());
                 g.fillRect(i,j,1,1);
@@ -55,7 +56,26 @@ public class Terrain extends JPanel {
         }
     }
 
-    public void showMoi (Graphics g) {
+    private int pX;
+    private int pY;
+    public void getField (int x, int y) {
+        pX = getToSquareSize(x);
+        pY = getToSquareSize(y);
+        List<Square> s = new LinkedList<>();
+        for (int i = pX; i < pX + gridSize; i++) {
+            for (int j = pY; j < pY + gridSize; j++) {
+                s.add(squares[i][j]);
+            }
+        }
+        repaint();
+        System.out.println(Square.averangeBiome(s));
+
+    }
+
+
+
+    //debug
+    private void showMoi (Graphics g) {
         System.out.println("Moist");
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -65,7 +85,8 @@ public class Terrain extends JPanel {
         }
     }
 
-    public void showHei (Graphics g) {
+    //debug
+    private void showHei (Graphics g) {
         System.out.println("Height");
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -74,6 +95,28 @@ public class Terrain extends JPanel {
             }
         }
     }
+
+    //debug
+    private void showBiome (Graphics g,  Biome b){
+        System.out.println(b);
+        for (Square s: getBiomeSq(b)) {
+            g.setColor(s.getColor());
+            g.fillRect(s.getX(),s.getY(),1,1);
+        }
+    }
+
+    //debug
+    private List<Square> getBiomeSq(Biome b){
+        List<Square> l = new LinkedList<>();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(squares[i][j].getBio() == b)
+                    l.add(squares[i][j]);
+            }
+        }
+        return l;
+    }
+
 
     private int getTSS(int value){
         return Math.round(value/ gridSize)* gridSize;
@@ -87,7 +130,7 @@ public class Terrain extends JPanel {
     public void pickFiled(int x, int y, JLabel label) {
         hX = getToSquareSize(x);
         hY = getToSquareSize(y);
-        label.setText(String.format("%s", squares[x][y].getBio()));
+        label.setText(String.format("x - %s: y - %s", getTSS(squares[x][y].getX()), getTSS(squares[x][y].getY())));
         hightlight = true;
         repaint();
     }
@@ -117,6 +160,37 @@ public class Terrain extends JPanel {
                     System.out.println(String.format("Done for i = %d, j = %d", i, j));
                 }
             }
+        repaint();
+    }
+
+    public void addSity(int n){
+        for (int k = 0; k < n; k++) {
+            int sizeSity = new Random().nextInt(Math.min(width, height)/4);
+            int xSity = new Random().nextInt(width- sizeSity);
+            int ySity = new Random().nextInt(height - sizeSity);
+            for (int i = xSity; i < xSity + sizeSity; i++) {
+                for (int j = ySity; j < ySity + sizeSity; j++) {
+                    squares[i][j].setBio(Biome.SITY);
+                }
+            }
+        }
+
+
+    }
+
+    public void reroll() {
+        long startTime = System.nanoTime();
+        squareSize = 1;
+        seed = new Random().nextInt();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                squares[i][j] = new Square(i,j,seed);
+            }
+        }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println(String.format("%d ms", duration/1000000));
+        addSity(3);
         repaint();
     }
 

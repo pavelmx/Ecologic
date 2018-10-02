@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
 
 import javax.swing.*;
 
@@ -32,6 +31,7 @@ public static void main(String[] args) {
 	terrain.addMouseListener(new MouseListener() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			terrain.getField(e.getX(), e.getY());
 
 		}
 
@@ -69,6 +69,9 @@ public static void main(String[] args) {
                 terrain.mode++;
                 terrain.repaint();
             }
+            if(e.getKeyChar() == 'r')
+                terrain.reroll();
+
 		}
 
 		@Override
