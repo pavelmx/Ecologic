@@ -1,3 +1,5 @@
+package Generation;
+
 import java.util.List;
 
 public enum Biome{

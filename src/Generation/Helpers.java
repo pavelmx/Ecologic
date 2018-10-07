@@ -1,6 +1,8 @@
+package Generation;
+
 import java.awt.Color;
 
-public class Col {
+public class Helpers {
 
 
     static Color addFunkyShCol(Color c, double h, double m){
@@ -21,5 +23,9 @@ public class Col {
 
     static double addMH(double h,double m){
         return  - m * (255/3);
+    }
+
+    static int getToSquareSize(int value, int gridSize){
+        return Math.round(value/ gridSize)* gridSize;
     }
 }
