@@ -12,10 +12,6 @@ public class Square {
 
 
 
-    public Square(){
-        System.out.println("f u");
-        throw new java.lang.Error("try something else");
-    }
     public Square(int x, int y, int seed){
         this.x = x;
         this.y = y;
@@ -101,7 +97,7 @@ public class Square {
             case SNOW:
                 return Helpers.addFunkyShCol(Color.WHITE, getHeight(), getMoist());
             case SITY:
-                return Color.decode("#7b9095");
+                return Color.black;
             default:
                 return Color.BLACK;
         }

@@ -2,7 +2,10 @@ package Generation;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
+
 
 public class TerImage {
 
@@ -11,12 +14,14 @@ public class TerImage {
     private int gridSize;
     private int seed;
     private boolean showGrid;
+    private List<SityNode> listSities;
 
     public TerImage (Square[][] squares, int gridSize) {
         this.squares = squares;
         this.gridSize = gridSize;
         seed = new Random().nextInt();
         regenerate();
+
     }
 
     void generateImage(){
@@ -39,11 +44,12 @@ public class TerImage {
                 squares[i][j] = new Square(i,j,seed);
             }
         }
+        generateSities();
+        generateRoutes();
         generateImage();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println(String.format("Generation %d ms", duration/1000000));
-        generateRoutes(1);
 
 
     }
@@ -124,65 +130,37 @@ public class TerImage {
         }else
             pickField(x,y);
     }
-    
-    void generateRoutes(int number){
-        Graphics g = image.getGraphics();
-        g.setColor(Color.BLACK);
-        for (int i = 0; i < getWidth(); i+=40) {
-            for (int j = 0; j < getHeight(); j+=40) {
-                if(new Random().nextBoolean())
-                    g.drawOval((int)(Math.sin(i)*50+i),(int)(Math.cos(i)*50+j),10,10);
+
+    void generateRoutes(){
+        //TODO impl
+
+    }
+
+    void generateSities(){
+        //TODO
+        //Генерирует города на сетке с шагом step в биоме равнин с определенной вероятностью и небольшим отклонением от сетки
+        List<SityNode> listSites = new ArrayList<SityNode>();
+        int step = 60;
+        for (int i = step/2; i < getWidth()-step/2; i+=step) {
+            for (int j = step/2; j < getHeight()-step/2; j+=step) {
+                if(squares[i][j].getBio() == Biome.PLAIN && new Random().nextBoolean()){
+                    int ki = (int)(i + Math.sin(j*50)*10);
+                    int kj = (int)(j + Math.sin(i*50)*10);
+                    SityNode sityNode = new SityNode(ki, kj);
+                    int width = sityNode.getDiametrX()/2 ;
+                    int heigh = sityNode.getDiametrY()/2;
+                    for (int k = -width; k < width; k++) {
+                        for (int l = -heigh; l < heigh; l++) {
+                            squares[ki+k][kj+l].setBio(Biome.SITY);
+                        }
+                    }
+                    listSites.add(sityNode);
+                }
             }
         }
+        this.listSities = listSites;
     }
 
 
 
-
-
-    
-
-
-
-
-
-    /*public void zoom(int scale){
-        squareSize = scale;
-            for (int i = 0; i <= width-scale; i+=scale) {
-                for (int j = 0; j <= height-scale; j+=scale) {
-                    Generation.Square[][] someSq = new Generation.Square[scale][scale];
-                    for (int l = 0; l < scale; l++) {
-                        for (int k = 0; k < scale; k++) {
-                            someSq[l][k] = squares[i+l][j+k];
-                        }
-                    }
-                    //TODO функции считают только height и biome
-                    double sqH =  Generation.Square.averangeHeight(someSq);
-                    Generation.Biome sqB = Generation.Square.averangeBiome(someSq);
-                    for (int l = 0; l < scale; l++) {
-                        for (int k = 0; k < scale; k++) {
-                            squares[i+l][j+k].setHeight(sqH);
-                            squares[i+l][j+k].setBio(sqB);
-                        }
-                    }
-                    System.out.println(String.format("Done for i = %d, j = %d", i, j));
-                }
-            }
-        repaint();
-    }*/
-
-    /*public void addSity(int n){
-        for (int k = 0; k < n; k++) {
-            int sizeSity = new Random().nextInt(Math.min(width, height)/4);
-            int xSity = new Random().nextInt(width- sizeSity);
-            int ySity = new Random().nextInt(height - sizeSity);
-            for (int i = xSity; i < xSity + sizeSity; i++) {
-                for (int j = ySity; j < ySity + sizeSity; j++) {
-                    squares[i][j].setBio(Generation.Biome.SITY);
-                }
-            }
-        }
-
-
-    }*/
 }

@@ -9,9 +9,14 @@ public class Main {
 
 public static void main(String[] args) {
 
+	//100x100 km
+	//
+
 	int gridSize = 20;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	Terrain terrain = new Terrain((int)(screenSize.getWidth()/3), (int)(screenSize.getHeight()/3), gridSize);
+	int width = (int)(screenSize.getWidth()*2/3/gridSize)*gridSize;
+	int height = (int)(screenSize.getHeight()*2/3/gridSize)*gridSize;
+	Terrain terrain = new Terrain(width, height, gridSize);
 	JFrame frame = new JFrame();
 	JLabel label = new JLabel();
 	label.setForeground(Color.red);
@@ -20,7 +25,6 @@ public static void main(String[] args) {
 	frame.setVisible(true);
 	terrain.setLayout(new FlowLayout());
 	terrain.add(label);
-	Color c = new Color(210,20,39);
 
 	terrain.addMouseMotionListener(new MouseAdapter() {
 		@Override
