@@ -1,5 +1,8 @@
+package Generation;
+
 import java.awt.Color;
-import java.util.Random;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Square {
     private double height;
@@ -22,7 +25,6 @@ public class Square {
     }
 
 
-
     public int getX() {
         return x;
     } public int getY(){
@@ -42,9 +44,6 @@ public class Square {
     }
 
 
-
-
-
     private void calcHeight(int seed){
         double scale = .007;
         double pers = .3;
@@ -60,21 +59,20 @@ public class Square {
     }
 
     public void setBio(){
-        //TODO биомы нормально
-        if(height < .25f){
+        if(height < .2f){
                 bio = Biome.RIVER;
         }
-        else if(height < .5f){
-            if(moist < .3f)
+        else if(height < .51f){
+            if(moist < .2f)
                 bio = Biome.DESERT;
             else
                 bio = Biome.PLAIN;
-        } else if(height < .7f){
+        } else if(height < .85f){
             if(moist < .5f)
                 bio = Biome.BRUSH;
             else
                 bio = Biome.FOREST;
-        } else if(height < .9f){
+        } else if(height < .98f){
             if(moist < .5f)
                 bio = Biome.TAIGA;
             else
@@ -87,33 +85,25 @@ public class Square {
     public Color getColor(){
         switch (bio) {
             case RIVER:
-                //return Color.decode("#41C4EB");
-                return Col.addFunkyShCol(Color.decode("#41C4EB"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#41C4EB"), getHeight(), getMoist());
             case DESERT:
-                //return Color.decode("#EDC9AF");
-                return Col.addFunkyShCol(Color.decode("#EDC9AF"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#EDC9AF"), getHeight(), getMoist());
             case PLAIN:
-                //return Color.decode("#49b484");
-                return Col.addFunkyShCol(Color.decode("#49b484"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#49b484"), getHeight(), getMoist());
             case FOREST:
-                //return Color.decode("#228B22");
-                return Col.addFunkyShCol(Color.decode("#228B22"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#228B22"), getHeight(), getMoist());
             case BRUSH:
-                //return Color.decode("#7d8e74");
-                return Col.addFunkyShCol(Color.decode("#7d8e74"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#7d8e74"), getHeight(), getMoist());
             case TAIGA:
-                //return Color.decode("#808000");
-                return Col.addFunkyShCol(Color.decode("#808000"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#808000"), getHeight(), getMoist());
             case MOUNT:
-                //return Color.decode("#977c53");
-                return Col.addFunkyShCol(Color.decode("#977c53"), getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.decode("#977c53"), getHeight(), getMoist());
             case SNOW:
-                //return Color.WHITE;
-                return Col.addFunkyShCol(Color.WHITE, getHeight(), getMoist());
+                return Helpers.addFunkyShCol(Color.WHITE, getHeight(), getMoist());
             case SITY:
-
+                return Color.decode("#7b9095");
             default:
-                return Color.getHSBColor((float) height, .7f, .535f);
+                return Color.BLACK;
         }
     }
 
@@ -138,6 +128,10 @@ public class Square {
                 bio[i*len+j] = s[i][j].getBio();
             }
         }
+        return Biome.maxBiome(bio);
+    }
+    static Biome averangeBiome(List<Square> s){
+        List<Biome> bio = s.stream().map(Square::getBio).collect(Collectors.toList());
         return Biome.maxBiome(bio);
     }
 

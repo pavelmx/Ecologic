@@ -1,6 +1,7 @@
+import Generation.Terrain;
+
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
 
 import javax.swing.*;
 
@@ -8,8 +9,9 @@ public class Main {
 
 public static void main(String[] args) {
 
-	int gridSize = 50;
-	Terrain terrain = new Terrain(800, 400, gridSize);
+	int gridSize = 20;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	Terrain terrain = new Terrain((int)(screenSize.getWidth()/3), (int)(screenSize.getHeight()/3), gridSize);
 	JFrame frame = new JFrame();
 	JLabel label = new JLabel();
 	label.setForeground(Color.red);
@@ -18,20 +20,22 @@ public static void main(String[] args) {
 	frame.setVisible(true);
 	terrain.setLayout(new FlowLayout());
 	terrain.add(label);
-
+	Color c = new Color(210,20,39);
 
 	terrain.addMouseMotionListener(new MouseAdapter() {
 		@Override
 			public void mouseMoved(MouseEvent e) {
                 int x = e.getX() ;
                 int y = e.getY();
-                terrain.pickFiled(x, y, label);
+                terrain.pickFiled(x, y);
   	          }
 		});
 	// :(
 	terrain.addMouseListener(new MouseListener() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			terrain.getField(e.getX(), e.getY());
+
 
 		}
 
@@ -52,7 +56,7 @@ public static void main(String[] args) {
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			terrain.stopHighlight();
+			//terrain.stopHighlight();
 		}
 	});
 
@@ -64,11 +68,14 @@ public static void main(String[] args) {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyChar() == 'v')
-				terrain.zoom(10);
-			if(e.getKeyChar() == 'c'){
+				terrain.grid();
+			/*if(e.getKeyChar() == 'c'){
                 terrain.mode++;
                 terrain.repaint();
-            }
+            }*/
+            if(e.getKeyChar() == 'r')
+                terrain.regenerate();
+
 		}
 
 		@Override
