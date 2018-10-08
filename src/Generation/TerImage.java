@@ -142,7 +142,6 @@ public class TerImage {
     }
 
     void generateRoutes(){
-        //TODO impl
         for (SityNode sity: listSities ) {
             List<SityNode> pickSityFrom = new LinkedList<>();
             pickSityFrom.addAll(listSities);
@@ -159,7 +158,7 @@ public class TerImage {
     }
 
     void generateSities(){
-        //TODO
+        //TODO better generation
         //Генерирует города на сетке с шагом step в биоме равнин с определенной вероятностью и небольшим отклонением от сетки
         List<SityNode> listSites = new ArrayList<SityNode>();
         int step = 60;
