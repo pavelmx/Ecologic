@@ -2,8 +2,7 @@ package Generation;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import java.util.List;
 
 
@@ -34,9 +33,21 @@ public class TerImage {
             }
         }
         g.dispose();
+        drawRoutes();
     }
 
-    public void regenerate () {
+    private void drawRoutes(){
+        Graphics g = image.getGraphics();
+        g.setColor(Color.black);
+        for (SityNode sity: listSities ) {
+            for (SityNode toSity: sity.getRoadToSity()) {
+                g.drawLine(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
+            }
+        }
+        g.dispose();
+    }
+
+    void regenerate () {
         long startTime = System.nanoTime();
         seed = new Random().nextInt();
         for (int i = 0; i < getWidth(); i++) {
@@ -50,8 +61,6 @@ public class TerImage {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println(String.format("Generation %d ms", duration/1000000));
-
-
     }
 
 
@@ -108,6 +117,7 @@ public class TerImage {
             prevX = pickedX;
             prevY = pickedY;
             g.dispose();
+            drawRoutes();
         }
     }
 
@@ -133,7 +143,19 @@ public class TerImage {
 
     void generateRoutes(){
         //TODO impl
-
+        for (SityNode sity: listSities ) {
+            List<SityNode> pickSityFrom = new LinkedList<>();
+            pickSityFrom.addAll(listSities);
+            pickSityFrom.remove(sity);
+            pickSityFrom.sort((o1, o2) -> {
+                int dis1 = SityNode.distanceLinear(sity,o1);
+                int dis2 = SityNode.distanceLinear(sity,o2);
+                return (dis1 > dis2) ? 1 : -1;
+            });
+            for (int i = 0; i < 3; i++) {
+                sity.addRoute(pickSityFrom.get(i));
+            }
+        }
     }
 
     void generateSities(){

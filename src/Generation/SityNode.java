@@ -1,12 +1,16 @@
 package Generation;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class SityNode {
-    int x, y;
-    int diametrX, diametrY;
-    float[][] buildingsMap;
-    float safety;
+    private int x, y;
+    private int diametrX, diametrY;
+    private float[][] buildingsMap;
+    private float safety;
+    private int numberOfRoads = 0;
+    private List<SityNode> roadToSity;
 
     public SityNode(int x, int y) {
         this.x = x;
@@ -15,6 +19,7 @@ public class SityNode {
         diametrX = Math.round((r.nextFloat()*6+1)/2)*2;
         diametrY = Math.round((r.nextFloat()*6+1)/2)*2;
         safety = r.nextFloat();
+        roadToSity = new LinkedList<>();
         buildingsMap = new float[diametrX][diametrY];
         double scale = .007;
         double pers = .3;
@@ -25,11 +30,42 @@ public class SityNode {
         }
     }
 
+    public void addRoute(SityNode sity){
+        if(!roadToSity.contains(sity)){
+            roadToSity.add(sity);
+            sity.addRoute(this);
+            numberOfRoads++;
+        }
+    }
+
     public int getDiametrX() {
         return diametrX;
     }
 
     public int getDiametrY() {
         return diametrY;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getNumberOfRoads() {
+        return numberOfRoads;
+    }
+
+    public List<SityNode> getRoadToSity() {
+        return roadToSity;
+    }
+
+    static public int distanceLinear(SityNode s1, SityNode s2){
+        int x = Math.abs(s1.getX() - s2.getX());
+        int y = Math.abs(s1.getY() - s2.getY());
+        int result = y > x ? (14*x + 10*(y-x)) : (14*y + 10*(x-y));
+        return result;
     }
 }
