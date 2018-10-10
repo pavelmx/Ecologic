@@ -23,7 +23,7 @@ public class TerImage {
 
     }
 
-    void generateImage(){
+    void drawImage(){
         image = new BufferedImage(squares.length*2, squares[0].length*2, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
         for (Square[] sqares2dim: squares) {
@@ -32,8 +32,10 @@ public class TerImage {
                 g.fillRect(sqare.getX(),sqare.getY(),1,1);
             }
         }
+
         g.dispose();
         drawRoutes();
+        drawSities();
     }
 
     private void drawRoutes(){
@@ -49,6 +51,20 @@ public class TerImage {
         g.dispose();
     }
 
+    private void drawSities(){
+        Graphics g = image.getGraphics();
+        g.setColor(Color.black);
+        for (SityNode sity: listSities) {
+            int heigh = sity.getDiametrX()/2;
+            int width = sity.getDiametrY()/2;
+            g.fillRect(sity.getX()-width, sity.getY() - heigh, sity.getDiametrY(), sity.getDiametrX());
+        }
+        g.dispose();
+    }
+
+
+
+
     void regenerate () {
         long startTime = System.nanoTime();
         seed = new Random().nextInt();
@@ -59,7 +75,7 @@ public class TerImage {
         }
         generateSities();
         generateRoutes();
-        generateImage();
+        drawImage();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println(String.format("Generation %d ms", duration/1000000));
@@ -76,7 +92,7 @@ public class TerImage {
 
     public BufferedImage getImage(){
         if (image == null){
-            generateImage();
+            drawImage();
         }
         return image;
     }
@@ -120,6 +136,7 @@ public class TerImage {
             prevY = pickedY;
             g.dispose();
             drawRoutes();
+            drawSities();
         }
     }
 
@@ -139,6 +156,8 @@ public class TerImage {
                 }
             }
             g.dispose();
+            drawRoutes();
+            drawSities();
         }else
             pickField(x,y);
     }
@@ -159,42 +178,33 @@ public class TerImage {
         }
     }
 
-    void generateSities(){
+    void generateSities() {
         //TODO better generation
         //Генерирует города на сетке с шагом step в биоме равнин с определенной вероятностью и небольшим отклонением от сетки
         List<SityNode> listSites = new ArrayList<SityNode>();
         int step = 60;
-        for (int i = -step; i < getWidth()+step; i+=step) {
-            for (int j = -step; j < getHeight()+step; j+=step) {
-                if(new Random().nextBoolean()) {
+        for (int i = -step; i < getWidth() + step; i += step) {
+            for (int j = -step; j < getHeight() + step; j += step) {
+                if (new Random().nextBoolean()) {
                     int ki = (int) (i + Math.sin(j * 50) * 10);
                     int kj = (int) (j + Math.sin(i * 50) * 10);
                     SityNode sityNode = new SityNode(ki, kj);
-                    /*int heigh = sityNode.getDiametrX()/2;
-                    int width = sityNode.getDiametrY()/2;
-                        for (int k = -width; k < width; k++) {
-                            for (int l = -heigh; l < heigh; l++) {
-                                //squares[ki+k][kj+l].setBio(Biome.SITY);
-                            }
-                        }
-                    }*/
                     listSites.add(sityNode);
                 }
             }
-        }
 
 
-        Iterator<SityNode> iter = listSites.iterator();
-
-        while (iter.hasNext()) {
-            SityNode sity = iter.next();
-            try {
-                if (squares[sity.getX()][sity.getY()].getBio() != Biome.PLAIN)
-                    iter.remove();
-            } catch (IndexOutOfBoundsException e) {
+            Iterator<SityNode> iter = listSites.iterator();
+            while (iter.hasNext()) {
+                SityNode sity = iter.next();
+                try {
+                    if (squares[sity.getX()][sity.getY()].getBio() != Biome.PLAIN)
+                        iter.remove();
+                } catch (IndexOutOfBoundsException e) {
+                }
             }
+            this.listSities = listSites;
         }
-        this.listSities = listSites;
     }
 
 
