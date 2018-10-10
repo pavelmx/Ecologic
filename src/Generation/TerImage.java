@@ -38,8 +38,10 @@ public class TerImage {
 
     private void drawRoutes(){
         Graphics g = image.getGraphics();
-        g.setColor(Color.black);
-        for (SityNode sity: listSities ) {
+        g.setColor(Color.orange);
+        List<SityNode> locListSities = new ArrayList<>();
+        locListSities.addAll(listSities);
+        for (SityNode sity: locListSities ) {
             for (SityNode toSity: sity.getRoadToSity()) {
                 g.drawLine(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
             }
@@ -162,21 +164,34 @@ public class TerImage {
         //Генерирует города на сетке с шагом step в биоме равнин с определенной вероятностью и небольшим отклонением от сетки
         List<SityNode> listSites = new ArrayList<SityNode>();
         int step = 60;
-        for (int i = step/2; i < getWidth()-step/2; i+=step) {
-            for (int j = step/2; j < getHeight()-step/2; j+=step) {
-                if(squares[i][j].getBio() == Biome.PLAIN && new Random().nextBoolean()){
-                    int ki = (int)(i + Math.sin(j*50)*10);
-                    int kj = (int)(j + Math.sin(i*50)*10);
+        for (int i = -step; i < getWidth()+step; i+=step) {
+            for (int j = -step; j < getHeight()+step; j+=step) {
+                if(new Random().nextBoolean()) {
+                    int ki = (int) (i + Math.sin(j * 50) * 10);
+                    int kj = (int) (j + Math.sin(i * 50) * 10);
                     SityNode sityNode = new SityNode(ki, kj);
-                    int width = sityNode.getDiametrX()/2 ;
-                    int heigh = sityNode.getDiametrY()/2;
-                    for (int k = -width; k < width; k++) {
-                        for (int l = -heigh; l < heigh; l++) {
-                            squares[ki+k][kj+l].setBio(Biome.SITY);
+                    /*int heigh = sityNode.getDiametrX()/2;
+                    int width = sityNode.getDiametrY()/2;
+                        for (int k = -width; k < width; k++) {
+                            for (int l = -heigh; l < heigh; l++) {
+                                //squares[ki+k][kj+l].setBio(Biome.SITY);
+                            }
                         }
-                    }
+                    }*/
                     listSites.add(sityNode);
                 }
+            }
+        }
+
+
+        Iterator<SityNode> iter = listSites.iterator();
+
+        while (iter.hasNext()) {
+            SityNode sity = iter.next();
+            try {
+                if (squares[sity.getX()][sity.getY()].getBio() != Biome.PLAIN)
+                    iter.remove();
+            } catch (IndexOutOfBoundsException e) {
             }
         }
         this.listSities = listSites;
