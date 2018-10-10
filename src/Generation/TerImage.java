@@ -45,7 +45,8 @@ public class TerImage {
         locListSities.addAll(listSities);
         for (SityNode sity: locListSities ) {
             for (SityNode toSity: sity.getRoadToSity()) {
-                g.drawLine(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
+                //g.drawLineWnoise(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
+                Helpers.drawLineWnoise(g, sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
             }
         }
         g.dispose();

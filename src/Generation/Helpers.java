@@ -1,6 +1,6 @@
 package Generation;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Helpers {
 
@@ -27,5 +27,10 @@ public class Helpers {
 
     static int getToSquareSize(int value, int gridSize){
         return Math.round(value/ gridSize)* gridSize;
+    }
+
+    static void drawLineWnoise(Graphics g, int x1, int y1, int x2, int y2){
+        //no noise for you :(
+        g.drawLine(x1, y1, x2, y2);
     }
 }
