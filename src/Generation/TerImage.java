@@ -15,12 +15,11 @@ public class TerImage {
     private boolean showGrid;
     private List<SityNode> listSities;
 
-    public TerImage (Square[][] squares, int gridSize) {
+    public TerImage (Square[][] squares, int gridSize, List<SityNode> listSities) {
         this.squares = squares;
         this.gridSize = gridSize;
+        this.listSities = listSities;
         seed = new Random().nextInt();
-        regenerate();
-
     }
 
     void drawImage(){
@@ -32,7 +31,6 @@ public class TerImage {
                 g.fillRect(sqare.getX(),sqare.getY(),1,1);
             }
         }
-
         g.dispose();
         drawRoutes();
         drawSities();
@@ -45,7 +43,7 @@ public class TerImage {
         locListSities.addAll(listSities);
         for (SityNode sity: locListSities ) {
             for (SityNode toSity: sity.getRoadToSity()) {
-                //g.drawLineWnoise(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
+                //g.drawLine(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
                 Helpers.drawLineWnoise(g, sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
             }
         }
@@ -63,24 +61,6 @@ public class TerImage {
         g.dispose();
     }
 
-
-
-
-    void regenerate () {
-        long startTime = System.nanoTime();
-        seed = new Random().nextInt();
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
-                squares[i][j] = new Square(i,j,seed);
-            }
-        }
-        generateSities();
-        generateRoutes();
-        drawImage();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println(String.format("Generation %d ms", duration/1000000));
-    }
 
 
     public int getHeight(){
@@ -163,50 +143,6 @@ public class TerImage {
             pickField(x,y);
     }
 
-    void generateRoutes(){
-        for (SityNode sity: listSities ) {
-            List<SityNode> pickSityFrom = new LinkedList<>();
-            pickSityFrom.addAll(listSities);
-            pickSityFrom.remove(sity);
-            pickSityFrom.sort((o1, o2) -> {
-                int dis1 = SityNode.distanceLinear(sity,o1);
-                int dis2 = SityNode.distanceLinear(sity,o2);
-                return (dis1 > dis2) ? 1 : -1;
-            });
-            for (int i = 0; i < 3; i++) {
-                sity.addRoute(pickSityFrom.get(i));
-            }
-        }
-    }
-
-    void generateSities() {
-        //TODO better generation
-        //Генерирует города на сетке с шагом step в биоме равнин с определенной вероятностью и небольшим отклонением от сетки
-        List<SityNode> listSites = new ArrayList<SityNode>();
-        int step = 60;
-        for (int i = -step; i < getWidth() + step; i += step) {
-            for (int j = -step; j < getHeight() + step; j += step) {
-                if (new Random().nextBoolean()) {
-                    int ki = (int) (i + Math.sin(j * 50) * 10);
-                    int kj = (int) (j + Math.sin(i * 50) * 10);
-                    SityNode sityNode = new SityNode(ki, kj);
-                    listSites.add(sityNode);
-                }
-            }
-
-
-            Iterator<SityNode> iter = listSites.iterator();
-            while (iter.hasNext()) {
-                SityNode sity = iter.next();
-                try {
-                    if (squares[sity.getX()][sity.getY()].getBio() != Biome.PLAIN)
-                        iter.remove();
-                } catch (IndexOutOfBoundsException e) {
-                }
-            }
-            this.listSities = listSites;
-        }
-    }
 
 
 
