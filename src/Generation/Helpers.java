@@ -1,6 +1,6 @@
 package Generation;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 
 public class Helpers {
 
@@ -12,7 +12,7 @@ public class Helpers {
         r = round(r, 0, 255);
         g = round(g, 0,255);
         b = round(b, 0, 255);
-        return new Color(r,g,b);
+        return Color.color(r,g,b);
     }
 
     static int round(int value ,int bottom, int top){
@@ -29,8 +29,8 @@ public class Helpers {
         return Math.round(value/ gridSize)* gridSize;
     }
 
-    static void drawLineWnoise(Graphics g, int x1, int y1, int x2, int y2){
-        //no noise for you :(
-        g.drawLine(x1, y1, x2, y2);
-    }
+//    static void drawLineWnoise(Graphics g, int x1, int y1, int x2, int y2){
+//        //no noise for you :(
+//        g.drawLine(x1, y1, x2, y2);
+//    }
 }

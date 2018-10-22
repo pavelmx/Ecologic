@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class TerImage {
-
+/*
     BufferedImage image;
     private Square[][] squares;
     private int gridSize;
@@ -27,7 +27,7 @@ public class TerImage {
         Graphics g = image.getGraphics();
         for (Square[] sqares2dim: squares) {
             for (Square sqare: sqares2dim) {
-                g.setColor(sqare.getColor());
+                //g.setColor(sqare.getColor());
                 g.fillRect(sqare.getX(),sqare.getY(),1,1);
             }
         }
@@ -44,7 +44,7 @@ public class TerImage {
         for (SityNode sity: locListSities ) {
             for (SityNode toSity: sity.getRoadToSity()) {
                 //g.drawLine(sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
-                Helpers.drawLineWnoise(g, sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
+                //Helpers.drawLineWnoise(g, sity.getX(),sity.getY(),toSity.getX(),toSity.getY());
             }
         }
         g.dispose();
@@ -145,5 +145,7 @@ public class TerImage {
 
 
 
-
+    public void routeMode() {
+    }
+    */
 }

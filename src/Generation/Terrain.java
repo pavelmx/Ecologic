@@ -1,14 +1,16 @@
 package Generation;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.paint.Color;
+
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
 
 
-public class Terrain extends JPanel {
-    private TerImage image;
+public class Terrain  {
     private Square[][] squares;
     private int gridSize;
     private int seed;
@@ -17,34 +19,30 @@ public class Terrain extends JPanel {
 
 
     public Terrain(int rows, int cols, int gridSize) {
-        this.setPreferredSize(new Dimension(rows, cols));
         squares = new Square[rows][cols];
         this.gridSize = gridSize;
         regenerate();
     }
 
     public void grid() {
-        image.gridMode();
-        repaint();
+//        image.gridMode();
+//        repaint();
     }
 
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image.getImage(), 0, 0, this);
-
+    public void routes() {
+//        image.routeMode();
+//        repaint();
     }
 
 
     public void pickFiled(int x, int y) {
-        image.pickField(x, y);
-        repaint();
+//        image.pickField(x, y);
+//        repaint();
     }
 
     public void getField(int x, int y) {
-        image.highField(x, y);
-        repaint();
+//        image.highField(x, y);
+//        repaint();
     }
 
 
@@ -54,6 +52,10 @@ public class Terrain extends JPanel {
 
     public int getWidth(){
         return squares.length;
+    }
+
+    public Square[][] getSqares(){
+        return squares;
     }
 
 
@@ -67,11 +69,10 @@ public class Terrain extends JPanel {
         }
         generateSities();
         generateRoutes();
-        image = new TerImage(squares, gridSize, listSities);
+        //image = new TerImage(squares, gridSize, listSities);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println(String.format("Generation %d ms", duration / 1000000));
-        repaint();
     }
 
     void generateSities() {
@@ -119,5 +120,7 @@ public class Terrain extends JPanel {
     }
 
 
-
+    public int getGridSize() {
+        return gridSize;
+    }
 }

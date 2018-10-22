@@ -1,6 +1,6 @@
 package Generation;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,23 +81,23 @@ public class Square {
     public Color getColor(){
         switch (bio) {
             case RIVER:
-                return Helpers.addFunkyShCol(Color.decode("#41C4EB"), getHeight(), getMoist());
+                return Color.web("#41C4EB");// Helpers.addFunkyShCol(Color.web("#41C4EB"), getHeight(), getMoist());
             case DESERT:
-                return Helpers.addFunkyShCol(Color.decode("#EDC9AF"), getHeight(), getMoist());
+                return Color.web("#EDC9AF");//Helpers.addFunkyShCol(Color.web("#EDC9AF"), getHeight(), getMoist());
             case PLAIN:
-                return Helpers.addFunkyShCol(Color.decode("#49b484"), getHeight(), getMoist());
+                return Color.web("#49b484");//Helpers.addFunkyShCol(Color.web("#49b484"), getHeight(), getMoist());
             case FOREST:
-                return Helpers.addFunkyShCol(Color.decode("#228B22"), getHeight(), getMoist());
+                return Color.web("#228B22");//Helpers.addFunkyShCol(Color.web("#228B22"), getHeight(), getMoist());
             case BRUSH:
-                return Helpers.addFunkyShCol(Color.decode("#7d8e74"), getHeight(), getMoist());
+                return Color.web("#7d8e74");//Helpers.addFunkyShCol(Color.web("#7d8e74"), getHeight(), getMoist());
             case TAIGA:
-                return Helpers.addFunkyShCol(Color.decode("#808000"), getHeight(), getMoist());
+                return Color.web("#808000");//Helpers.addFunkyShCol(Color.web("#808000"), getHeight(), getMoist());
             case MOUNT:
-                return Helpers.addFunkyShCol(Color.decode("#977c53"), getHeight(), getMoist());
+                return Color.web("#977c53");//Helpers.addFunkyShCol(Color.web("#977c53"), getHeight(), getMoist());
             case SNOW:
-                return Helpers.addFunkyShCol(Color.WHITE, getHeight(), getMoist());
+                return Color.WHITE;//Helpers.addFunkyShCol(Color.WHITE, getHeight(), getMoist());
             case SITY:
-                return Color.black;
+                return Color.CORAL;
             default:
                 return Color.BLACK;
         }
