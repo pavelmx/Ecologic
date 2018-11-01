@@ -30,16 +30,18 @@ public class MainWindow {
     public Slider slider3;
     public CheckBox checkBudug;
     public ComboBox comboB;
+    public Canvas sityCanvas;
+    public Canvas debugCanvas;
 
     private Terrain terrain;
-    private CanvasGraphics canvasG;
+    //private CanvasGraphics canvasG;
 
     @FXML
     private void initialize() {
         System.out.println("init");
         this.terrain = new Terrain((int) terCanvas.getWidth(), (int) terCanvas.getHeight(), (int)terCanvas.getWidth()/20);
-        this.canvasG = new CanvasGraphics(terCanvas);
-        canvasG.drawImage(terCanvas, terrain);
+        //this.canvasG = new CanvasGraphics(terCanvas);
+        evalButton();
         CanvasGrid.initializeGrid(gridCanvas, terrain.getGridSize());
         comboB.getItems().addAll("Terrain", "Water", "Pop Dest", "Safety");
         System.out.println("done");
@@ -61,7 +63,8 @@ public class MainWindow {
     public void evalButton() {
         terrain.reroll();
         long startTime = System.nanoTime(); //timer
-        canvasG.drawImage(terCanvas, terrain);
+        CanvasGraphics.drawImage(terCanvas, terrain);
+        CanvasGraphics.drawSity(sityCanvas, terrain);
         long endTime = System.nanoTime(); //timer
         long duration = (endTime - startTime); //timer
         System.out.println(String.format("Draw in %d ms", duration / 1000000)); //timer
@@ -132,13 +135,13 @@ public class MainWindow {
         boolean b = checkBudug.isSelected();
         comboB.setVisible(b); slider1.setVisible(b); slider2.setVisible(b); slider3.setVisible(b);
         if(!checkBudug.isSelected()){
-            canvasG.drawImage(terCanvas,terrain);
+            CanvasGraphics.clearCanvas(debugCanvas);
         }
     }
 
     public void comboBoxAction(ActionEvent e) {
         int mode = comboB.getSelectionModel().getSelectedIndex();
-        CanvasGraphics.drawDebugImage(terCanvas,terrain, mode);
+        CanvasGraphics.drawDebugImage(debugCanvas,terrain, mode);
         System.out.println(comboB.getValue());
     }
 }
