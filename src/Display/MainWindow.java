@@ -75,7 +75,7 @@ public class MainWindow {
 
 
     @FXML
-    public void gridMode() {
+    public void gridModeButton() {
         gridCanvas.setVisible(!gridCanvas.isVisible());
     }
 
@@ -129,7 +129,7 @@ public class MainWindow {
         }
        }
 
-    public void SavetoDics() {
+    public void SavetoDicsButton() {
         Utils.saveToDics("stuff", terrain);
     }
 
@@ -148,5 +148,8 @@ public class MainWindow {
             CanvasGraphics.drawDebugImage(debugCanvas, terrain, mode);
             System.out.println(comboB.getValue());
         }
+    }
+
+    public void calcButton(ActionEvent actionEvent) {
     }
 }
