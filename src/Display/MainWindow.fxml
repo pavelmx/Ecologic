@@ -28,7 +28,7 @@
             </HBox.margin>
         </Canvas>
         <Canvas fx:id="gridCanvas"  height="$HEIGHT" width="$HEIGHT"></Canvas>
-        <Canvas fx:id="pickCanvas" height="$HEIGHT" width="$HEIGHT" onMouseMoved="#MouseMoved" onMouseClicked="#mouseCliked">
+        <Canvas fx:id="pickCanvas" height="$HEIGHT" width="$HEIGHT" onMouseMoved="#MouseMoved" onMouseClicked="#mouseCliked" onMouseExited="#mouseExited">
             <cursor>
                 <Cursor fx:constant="CROSSHAIR"/>
             </cursor>
@@ -38,8 +38,10 @@
         <children>
             <Button mnemonicParsing="false" onAction="#evalButton" text="Regenerate"/>
             <Button mnemonicParsing="false" onAction="#gridMode" text="Grid"/>
-            <Slider/>
-            <Spinner/>
+            <Slider fx:id="slider1" min="1" max="10" value="1"/>
+            <Slider fx:id="slider2" min="1" max="90" value="1"/>
+            <Slider fx:id="slider3" min="1" max="10" value="1"/>
+            <Button text="Name" onAction="#SavetoDics"/>
         </children>
         <opaqueInsets>
             <Insets/>
