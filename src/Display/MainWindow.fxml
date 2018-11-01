@@ -40,9 +40,9 @@
         <children>
             <Button mnemonicParsing="false" onAction="#evalButton" text="Regenerate"/>
             <Button mnemonicParsing="false" onAction="#gridMode" text="Grid"/>
-            <Slider fx:id="slider1" min="1" max="10" value="1"/>
-            <Slider fx:id="slider2" min="1" max="90" value="1"/>
-            <Slider fx:id="slider3" min="1" max="10" value="1"/>
+            <Slider fx:id="slider1" min="1" max="10" value="1" visible="false"/>
+            <Slider fx:id="slider2" min="1" max="90" value="1" visible="false"/>
+            <Slider fx:id="slider3" min="1" max="10" value="1" visible="false"/>
             <Button text="Save" onAction="#SavetoDics"/>
             <CheckBox fx:id="checkBudug" text="debug" onAction="#debugCheck"></CheckBox>
             <ComboBox fx:id="comboB" visible="false" onAction="#comboBoxAction"></ComboBox>

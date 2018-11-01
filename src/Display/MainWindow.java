@@ -129,7 +129,8 @@ public class MainWindow {
     }
 
     public void debugCheck() {
-        comboB.setVisible(checkBudug.isSelected());
+        boolean b = checkBudug.isSelected();
+        comboB.setVisible(b); slider1.setVisible(b); slider2.setVisible(b); slider3.setVisible(b);
         if(!checkBudug.isSelected()){
             canvasG.drawImage(terCanvas,terrain);
         }
