@@ -138,12 +138,15 @@ public class MainWindow {
         comboB.setVisible(b); slider1.setVisible(b); slider2.setVisible(b); slider3.setVisible(b);
         if(!checkBudug.isSelected()){
             CanvasGraphics.clearCanvas(debugCanvas);
+            comboB.setValue(null);
         }
     }
 
     public void comboBoxAction(ActionEvent e) {
-        int mode = comboB.getSelectionModel().getSelectedIndex();
-        CanvasGraphics.drawDebugImage(debugCanvas,terrain, mode);
-        System.out.println(comboB.getValue());
+        if (comboB.getValue() != null){
+            int mode = comboB.getSelectionModel().getSelectedIndex();
+            CanvasGraphics.drawDebugImage(debugCanvas, terrain, mode);
+            System.out.println(comboB.getValue());
+        }
     }
 }
