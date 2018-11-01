@@ -32,6 +32,7 @@ public class Terrain  {
         long startTime = System.nanoTime(); //timer
         generateHeightNwaterMap();
         generatePopul();
+        generateSafetyMap();
         long endTime = System.nanoTime(); //timer
         long duration = (endTime - startTime); //timer
         System.out.println(String.format("generation in %d ms", duration / 1000000)); //timer
@@ -87,7 +88,7 @@ public class Terrain  {
         double popMap[][] = new double[height][width];
         double scale = 0.00165;
         double pers = 0.14;
-        int numberIter = 5;        //5
+        int numberIter = 5;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 double val = SimplexNoise.sumOctave(numberIter, i, j, Pseed, pers, scale);
@@ -98,7 +99,7 @@ public class Terrain  {
         if ( waterMap != null){
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    if(waterMap[i][j] == 0){
+                    if(waterMap[i][j] > 0){
                         popMap[i][j] = 0;
                     }
                 }
