@@ -50,12 +50,16 @@ public class Terrain  {
             for (int j = 0; j < width; j++) {
                 double val = SimplexNoise.sumOctave(numberIter, i, j, seed, pers, scale);
                 val = (val+1)/2;
-                heightMap[i][j] = val;//linearVal2(val);
+                heightMap[i][j] = stepValue(val, 20);//linearVal2(val);
                 waterMap[i][j] = val > 0.8 ? ((1 - val) * 5 ) : 0; //map 0.8 - 1 values to 1 - 0
             }
         }
         this.heightMap = heightMap;
         this.waterMap = waterMap;
+    }
+
+    public double stepValue(double v, int step){
+        return Math.floor(v*step)/step;
     }
 
     /*private int tempNumberIr = 5;
