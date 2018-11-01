@@ -83,7 +83,6 @@ public class MainWindow {
 
     @FXML
     public void MouseMoved(MouseEvent e) {
-        //TODO move outside controller
         int gridSize = terrain.getGridSize();
         int x = (int) (e.getX() / gridSize) * gridSize;
         int y = (int) (e.getY() / gridSize) * gridSize;
@@ -103,7 +102,6 @@ public class MainWindow {
 
     @FXML
     public void mouseCliked(MouseEvent e) {
-        //TODO move outside controller (mby this part is actualy ok (no) )
         int gridSize = terrain.getGridSize();
         int x = (int) (e.getX() / gridSize) * gridSize;
         int y = (int) (e.getY() / gridSize) * gridSize;
