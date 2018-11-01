@@ -59,18 +59,18 @@ public class MainWindow {
 
     @FXML
     public void evalButton() {
-        long startTime = System.nanoTime(); //timer
+            long startTime = System.nanoTime(); //timer
         terrain.reroll();
-        long endTime = System.nanoTime(); //timer
-        long duration = (endTime - startTime); //timer
-        System.out.println(String.format("generation in %d ms", duration / 1000000)); //timer
-        startTime = System.nanoTime(); //timer
+            long endTime = System.nanoTime(); //timer
+            long duration = (endTime - startTime); //timer
+            System.out.println(String.format("generation in %d ms", duration / 1000000)); //timer
+            startTime = System.nanoTime(); //timer
         CanvasGraphics.drawImage(terCanvas, terrain);
         CanvasGraphics.drawSity(sityCanvas, terrain);
-        endTime = System.nanoTime(); //timer
-        duration = (endTime - startTime); //timer
-        System.out.println(String.format("Draw in %d ms", duration / 1000000)); //timer
-        System.out.println("---");
+            endTime = System.nanoTime(); //timer
+            duration = (endTime - startTime); //timer
+            System.out.println(String.format("Draw in %d ms", duration / 1000000)); //timer
+            System.out.println("---");
     }
 
 
