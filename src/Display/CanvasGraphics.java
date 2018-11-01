@@ -88,4 +88,13 @@ public class CanvasGraphics {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0,0, canvas.getWidth(),canvas.getHeight());
     }
+
+    static public void initializeGrid(Canvas c, int gridSize){
+        PixelWriter gc = c.getGraphicsContext2D().getPixelWriter();
+        for (int i = gridSize; i < c.getWidth(); i+=gridSize) {
+            for (int j = gridSize; j < c.getHeight(); j+=gridSize) {
+                gc.setColor(i,j,Color.BLACK);
+            }
+        }
+    }
 }

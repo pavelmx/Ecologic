@@ -42,7 +42,7 @@ public class MainWindow {
         System.out.println("init");
         this.terrain = new Terrain((int) terCanvas.getWidth(), (int) terCanvas.getHeight(), (int)terCanvas.getWidth()/20);
         evalButton();
-        CanvasGrid.initializeGrid(gridCanvas, terrain.getGridSize());
+        CanvasGraphics.initializeGrid(gridCanvas, terrain.getGridSize());
         comboB.getItems().addAll("Terrain", "Water", "Pop Dest", "Safety");
         System.out.println("done");
         /*slider1.valueProperty().addListener((observable, oldValue, newValue) -> {
