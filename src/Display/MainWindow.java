@@ -7,6 +7,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -26,6 +28,8 @@ public class MainWindow {
     public Slider slider1;
     public Slider slider2;
     public Slider slider3;
+    public CheckBox checkBudug;
+    public ComboBox comboB;
 
     private Terrain terrain;
     private CanvasGraphics canvasG;
@@ -37,6 +41,7 @@ public class MainWindow {
         this.canvasG = new CanvasGraphics(terCanvas);
         canvasG.drawImage(terCanvas, terrain);
         CanvasGrid.initializeGrid(gridCanvas, terrain.getGridSize());
+        comboB.getItems().addAll("Terrain", "Water", "Pop Dest", "Safety");
         System.out.println("done");
         /*slider1.valueProperty().addListener((observable, oldValue, newValue) -> {
             terrain.setTempNumberIr((int)Math.round(newValue.doubleValue()));
@@ -119,7 +124,20 @@ public class MainWindow {
         }
        }
 
-    public void SavetoDics(ActionEvent actionEvent) {
+    public void SavetoDics() {
         Utils.saveToDics("stuff", terrain);
+    }
+
+    public void debugCheck() {
+        comboB.setVisible(checkBudug.isSelected());
+        if(!checkBudug.isSelected()){
+            canvasG.drawImage(terCanvas,terrain);
+        }
+    }
+
+    public void comboBoxAction(ActionEvent e) {
+        int mode = comboB.getSelectionModel().getSelectedIndex();
+        CanvasGraphics.drawDebugImage(terCanvas,terrain, mode);
+        System.out.println(comboB.getValue());
     }
 }
