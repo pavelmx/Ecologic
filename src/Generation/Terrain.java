@@ -45,8 +45,8 @@ public class Terrain  {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 double val = SimplexNoise.sumOctave(numberIter, i, j, seed, pers, scale);
-                val = (val+1)/2;
-                heightMap[i][j] = stepValue(val, 8);//linearVal2(val);
+                val = (val+1)/2; //map from -1 -  1 to 0 - 1
+                heightMap[i][j] = stepValue(val, 8);
                 waterMap[i][j] = val > 0.8 ? stepValue((1 - val) * 5 , 10) : 0; //map 0.8 - 1 values to 1 - 0
             }
         }
