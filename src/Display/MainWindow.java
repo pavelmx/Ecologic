@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -32,6 +33,7 @@ public class MainWindow {
     public ComboBox comboB;
     public Canvas sityCanvas;
     public Canvas debugCanvas;
+    public Button calcButton;
 
     private Terrain terrain;
 
@@ -107,10 +109,12 @@ public class MainWindow {
         int y = (int) (e.getY() / gridSize) * gridSize;
         if (pX == x && pY == y) {
             pX = pY = Integer.MAX_VALUE;
+            calcButton.setDisable(true);
             return;
         }
         pX = x;
         pY = y;
+        calcButton.setDisable(false);
         MouseMoved(e);
     }
 
@@ -119,6 +123,7 @@ public class MainWindow {
         //System.out.println(e.getCode());
         if (e.getCode() == KeyCode.ESCAPE) {
             pX = pY = Integer.MAX_VALUE;
+            calcButton.setDisable(true);
         }
     }
 
@@ -150,6 +155,7 @@ public class MainWindow {
         }
     }
 
-    public void calcButton(ActionEvent actionEvent) {
+    public void calcButton() {
+        //coolCalculation(pX,pY);
     }
 }

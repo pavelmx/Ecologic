@@ -48,7 +48,7 @@
             <Button text="Save" onAction="#SavetoDicsButton"/>
             <CheckBox fx:id="checkBudug" text="debug" onAction="#debugCheck"/>
             <ComboBox fx:id="comboB" visible="false" onAction="#comboBoxAction"/>
-            <Button onAction="#calcButton" text="Calculate"/>
+            <Button fx:id="calcButton" onAction="#calcButton" text="Calculate" disable="true"/>
         </children>
         <opaqueInsets>
             <Insets/>
