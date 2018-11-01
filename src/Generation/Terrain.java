@@ -29,13 +29,9 @@ public class Terrain  {
         seed = new Random().nextInt(9999);
         Pseed = new Random().nextInt(9999);
         Sseed = new Random().nextInt(9999);
-        long startTime = System.nanoTime(); //timer
         generateHeightNwaterMap();
         generatePopul();
         generateSafetyMap();
-        long endTime = System.nanoTime(); //timer
-        long duration = (endTime - startTime); //timer
-        System.out.println(String.format("generation in %d ms", duration / 1000000)); //timer
         //System.out.println(String.format("Number iter - %d\nScale - %f\nPers - %f\nSeed - %d\n---", tempNumberIr,tempScale, tempPers, seed ));
 
     }
@@ -51,7 +47,7 @@ public class Terrain  {
                 double val = SimplexNoise.sumOctave(numberIter, i, j, seed, pers, scale);
                 val = (val+1)/2;
                 heightMap[i][j] = stepValue(val, 20);//linearVal2(val);
-                waterMap[i][j] = val > 0.8 ? ((1 - val) * 5 ) : 0; //map 0.8 - 1 values to 1 - 0
+                waterMap[i][j] = val > 0.8 ? stepValue((1 - val) * 5 , 20) : 0; //map 0.8 - 1 values to 1 - 0
             }
         }
         this.heightMap = heightMap;
@@ -135,45 +131,6 @@ public class Terrain  {
         this.safetyMap = saveMap;
     }
 
-    double linearVal( double val){
-        double f = 0;
-        if(val < .14){
-            f = 0;
-        } else if(val < .51){
-            f = .2;
-        } else if(val < .85f){
-            f = .51;
-        } else if(val < .98f){
-            f = .85;
-        } else
-            f = 1;
-        return f;
-    }
-    double linearVal2(double val){
-        double f = 0;
-        if(val < .1){
-            f = 0;
-        } else if(val < .2){
-            f = .1;
-        } else if(val < .3){
-            f = .2;
-        } else if(val < .4){
-            f = .3;
-        } else if(val < .5){
-            f = .4;
-        } else if(val < .6){
-            f = .5;
-        } else if(val < .7){
-            f = .6;
-        } else if(val < .8){
-            f = .7;
-        } else if(val < .9){
-            f = .8;
-        } else {
-            f = .85;
-        }
-        return f;
-    }
 
 
     public double[][] getPopulationMap() {

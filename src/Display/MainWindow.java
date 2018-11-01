@@ -34,13 +34,11 @@ public class MainWindow {
     public Canvas debugCanvas;
 
     private Terrain terrain;
-    //private CanvasGraphics canvasG;
 
     @FXML
     private void initialize() {
         System.out.println("init");
         this.terrain = new Terrain((int) terCanvas.getWidth(), (int) terCanvas.getHeight(), (int)terCanvas.getWidth()/20);
-        //this.canvasG = new CanvasGraphics(terCanvas);
         evalButton();
         CanvasGrid.initializeGrid(gridCanvas, terrain.getGridSize());
         comboB.getItems().addAll("Terrain", "Water", "Pop Dest", "Safety");
@@ -61,12 +59,16 @@ public class MainWindow {
 
     @FXML
     public void evalButton() {
-        terrain.reroll();
         long startTime = System.nanoTime(); //timer
-        CanvasGraphics.drawImage(terCanvas, terrain);
-        CanvasGraphics.drawSity(sityCanvas, terrain);
+        terrain.reroll();
         long endTime = System.nanoTime(); //timer
         long duration = (endTime - startTime); //timer
+        System.out.println(String.format("generation in %d ms", duration / 1000000)); //timer
+        startTime = System.nanoTime(); //timer
+        CanvasGraphics.drawImage(terCanvas, terrain);
+        CanvasGraphics.drawSity(sityCanvas, terrain);
+        endTime = System.nanoTime(); //timer
+        duration = (endTime - startTime); //timer
         System.out.println(String.format("Draw in %d ms", duration / 1000000)); //timer
         System.out.println("---");
     }
