@@ -1,37 +1,25 @@
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import Display.MainWindow;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
-import javax.swing.JFrame;
+import java.io.IOException;
 
-public class Main {
+public class Main extends Application {
 
-	private static final int size = 10;
-	
-public static void main(String[] args) {
-		
-	RepositoryColors r = new RepositoryColors();
-	r.LoadFromFile();
-	int w = 128; 
-	int h = 128;
-	
-	
-	
-		final Map map = new Map(w, h, size);
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(map);
-        frame.pack();
-		frame.setVisible(true);
-		
-		map.addMouseMotionListener(new MouseAdapter() {
+    public static void main(String[] args) { launch(args); }
 
-            @Override
-			public void mouseMoved(MouseEvent e) {
-                int x = e.getX() / size;
-                int y = e.getY() / size;
-                map.highlight(x, y);
-            }
-		});
-		
-	}
-	
+
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Display/MainWindow.fxml"));
+        primaryStage.setTitle("Placement simulation");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
 }
