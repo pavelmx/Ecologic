@@ -1,4 +1,4 @@
-#Sity generation
+# Sity generation
 
 Part of program to compute variety of pollution metrics  for factory located near town
 
@@ -11,7 +11,7 @@ Examples:
 ![image1](https://sun9-29.userapi.com/c849224/v849224028/ba6d8/jvdc-pY9-FM.jpg)
 ![image2](https://sun9-25.userapi.com/c849224/v849224028/ba6c8/dqXH5buL8ho.jpg)
 
-#Alternative ways
+# Alternative ways
 
 Parametrs of the generation can be altered. For example we can generate kind of sateline image of area (old version)
 
